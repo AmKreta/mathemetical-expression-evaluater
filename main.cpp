@@ -4,7 +4,7 @@
 
 int main(){
 
-    Lexer lexer{"23+27+50"};
+    Lexer lexer{"20**2"};
 
     auto tokens = lexer.lex();
 

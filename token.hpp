@@ -10,13 +10,17 @@ public:
     enum class Type : int
     {
         INTEGER,
-        ADD, 
+        ADD,
+        SUBTRACT,
+        MULTIPLY,
+        DIVIDE,
+        POWER,
         NONE // null value
     };
 
     static std::vector<std::string> TypeStr;
 
-    Token(Token::Type type, std::string value):type(type), value(value){}
+    Token(Token::Type type, std::string value) : type(type), value(value) {}
 
     Token::Type getTokenType()
     {
@@ -44,4 +48,5 @@ private:
     std::string value;
 };
 
-std::vector<std::string> Token::TypeStr = {"Integer", "Add","None"};
+std::vector<std::string> Token::TypeStr = {"Integer", "Add", "Subtract", "Multiply", "Divide", "Power"
+                                                                                               "None"};

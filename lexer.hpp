@@ -28,6 +28,27 @@ public:
                 this->currentPosition++;
             }
 
+            if(ch == '-'){
+                result.push_back({Token::Type::SUBTRACT, "-"});
+                this->currentPosition++;
+            }
+
+            if(ch == '/'){
+                result.push_back({Token::Type::DIVIDE, "/"});
+                this->currentPosition++;
+            }
+
+            if(ch == '*'){
+                if(this->currentPosition-1<this->input.size() && this->input[this->currentPosition+1]=='*'){
+                    result.push_back({Token::Type::POWER, "**"});
+                    this->currentPosition+=2;
+                }
+                else{
+                    result.push_back({Token::Type::MULTIPLY, "*"});
+                    this->currentPosition++;
+                }   
+            }
+
             else if (isdigit(ch))
             {
                 std::ostringstream oss;

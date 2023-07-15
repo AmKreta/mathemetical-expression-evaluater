@@ -4,7 +4,7 @@
 
 int main(){
 
-    Lexer lexer{"20**2"};
+    Lexer lexer{"20+2+3-5/5"};
 
     auto tokens = lexer.lex();
 
@@ -14,6 +14,6 @@ int main(){
     Parser parser{tokens};
     auto res=parser.parse();
 
-    std::cout<<"result is -> "<<res<<std::endl;
+    std::cout<<"result is -> "<<res->eval()<<std::endl;
     return 0;
 }

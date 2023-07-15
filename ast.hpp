@@ -48,4 +48,34 @@ public:
         else
             throw Exception{"operation not defined"};
     }
+
+    std::shared_ptr<AstNode> getRightChild()
+    {
+        return this->right;
+    }
+
+    std::shared_ptr<AstNode> getLeftChild()
+    {
+        return this->left;
+    }
+
+    Token::Type getOperation()
+    {
+        return this->operation;
+    }
+
+    void setRightChild(std::shared_ptr<AstNode> child)
+    {
+        this->right = child;
+    }
+
+    void setLeftChild(std::shared_ptr<AstNode> child)
+    {
+        this->left = child;
+    }
+
+    void setOperation(Token::Type op)
+    {
+        this->operation = op;
+    }
 };

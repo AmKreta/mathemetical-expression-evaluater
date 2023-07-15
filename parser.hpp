@@ -1,6 +1,8 @@
 #pragma once
 
+#include<memory>
 #include "token.hpp"
+#include "ast.hpp"
 
 class Parser
 {
@@ -10,9 +12,9 @@ private:
 public:
     Parser(std::vector<Token> &tokens) : tokens(tokens) {}
 
-    int parse()
+    std::shared_ptr<BinaryOperation> parse()
     {
-        int res = 0;
+        auto res = std::make_shared<BinaryOperation>();
         Token::Type operation = Token::Type::NONE;
         int i = 0;
         while (i < this->tokens.size())
@@ -23,22 +25,25 @@ public:
 
             if (currentTokenType == Token::Type::INTEGER)
             {
-                int val = std::stoi(currentTokenValue);
-                if (operation == Token::Type::NONE)
-                    res = val;
-                else if (operation == Token::Type::ADD)
-                    res += val;
-                else if (operation == Token::Type::SUBTRACT)
-                    res -= val;
-                else if (operation == Token::Type::MULTIPLY)
-                    res *= val;
-                else if (operation == Token::Type::DIVIDE)
-                    res /= val;
-                else if (operation == Token::Type::POWER)
-                    res = std::pow(res, val);
+               auto integer = std::make_shared<Integer>(std::stoi(currentTokenValue));
+               res->getLeftChild()
+                    ?res->setRightChild(integer)
+                    :res->setLeftChild(integer);
             }
-            else
-                operation = currentTokenType;
+            else if(
+                currentTokenType == Token::Type::ADD || 
+                currentTokenType == Token::Type::SUBTRACT || 
+                currentTokenType == Token::Type::MULTIPLY || 
+                currentTokenType == Token::Type::DIVIDE || 
+                currentTokenType == Token::Type::POWER
+            ){
+                if(res->getOperation()!=Token::Type::NONE){
+                    auto astParent = std::make_shared<BinaryOperation>();
+                    astParent->setLeftChild(res);
+                    res = astParent;
+                }    
+                res->setOperation(currentTokenType);
+            }
             i++;
         }
         return res;

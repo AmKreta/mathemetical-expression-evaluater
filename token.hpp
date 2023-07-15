@@ -10,7 +10,8 @@ public:
     enum class Type : int
     {
         INTEGER,
-        ADD
+        ADD, 
+        NONE // null value
     };
 
     static std::vector<std::string> TypeStr;
@@ -43,4 +44,4 @@ private:
     std::string value;
 };
 
-std::vector<std::string> Token::TypeStr = {"Integer", "Add"};
+std::vector<std::string> Token::TypeStr = {"Integer", "Add","None"};
